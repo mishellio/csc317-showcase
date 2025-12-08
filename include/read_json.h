@@ -33,6 +33,7 @@ inline bool read_json(
 #include "Plane.h"
 #include "Triangle.h"
 #include "TriangleSoup.h"
+#include "Ellipsoid.h"
 #include "Light.h"
 #include "PointLight.h"
 #include "DirectionalLight.h"
@@ -153,7 +154,15 @@ inline bool read_json(
           parse_Vector3d(jobj["corners"][1]),
           parse_Vector3d(jobj["corners"][2]));
         objects.push_back(tri);
-      }else if(jobj["type"] == "soup")
+      }else if (jobj["type"] == "ellipsoid")
+      {
+          std::shared_ptr<Ellipsoid> ellipsoid(new Ellipsoid());
+          ellipsoid->center = parse_Vector3d(jobj["center"]);
+          ellipsoid->radius_x = jobj["radius_x"].get<double>();
+          ellipsoid->radius_y = jobj["radius_y"].get<double>();
+          ellipsoid->radius_z = jobj["radius_z"].get<double>();
+          objects.push_back(ellipsoid);
+      }else if (jobj["type"] == "soup")
       {
         std::vector<std::vector<double> > V;
         std::vector<std::vector<double> > F;
