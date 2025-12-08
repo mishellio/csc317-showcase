@@ -6,6 +6,9 @@ class PointLight : public Light
 {
   public:
     Eigen::Vector3d p;
+    double height;
+    double width;
+    Eigen::MatrixXd sample_points;
     // Given a query point return the direction _toward_ the Light.
     //
     // Input:
@@ -15,6 +18,8 @@ class PointLight : public Light
     //    max_t  parametric distance from q along d to light (may be inf)
     void direction(
       const Eigen::Vector3d & q, Eigen::Vector3d & d, double & max_t) const;
+
+    Eigen::MatrixXd sample() const;
 };
 #endif
 

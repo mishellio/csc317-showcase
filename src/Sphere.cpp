@@ -8,8 +8,8 @@ bool Sphere::intersect(
 	Eigen::Vector3d e_c = ray.origin - center;
 	double a = ray.direction.dot(ray.direction);
 	double b = 2.0*ray.direction.dot(e_c);
-	double c = e_c.dot(e_c) - pow(radius, 2.0);
-	double discriminant = pow(b, 2.0) - 4.0 * a * c;
+	double c = e_c.dot(e_c) - (radius*radius);
+	double discriminant = (b*b) - 4.0 * a * c;
 
 	if (discriminant < 0)
 		return false;

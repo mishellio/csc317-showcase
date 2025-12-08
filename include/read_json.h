@@ -117,6 +117,9 @@ inline bool read_json(
         std::shared_ptr<PointLight> light(new PointLight());
         light->p = parse_Vector3d(jlight["position"]);
         light->I = parse_Vector3d(jlight["color"]);
+        light->height = jlight["height"].get<double>();
+        light->width = jlight["width"].get<double>();
+        light->sample_points = light->sample();
         lights.push_back(light);
       }
     }

@@ -2,8 +2,8 @@
 
 void viewing_ray(
 	const Camera& camera,
-	const int i,
-	const int j,
+	const double i,
+	const double j,
 	const int width,
 	const int height,
 	Ray& ray)
