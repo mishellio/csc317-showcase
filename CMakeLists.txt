@@ -47,7 +47,7 @@ if (DEFINED LIBIGL_EXTRA_SOURCES)
 endif()
 
 # Executable target
-add_executable(${PROJECT_NAME} ${SRCFILES} ${EXTRA_SOURCES})
+add_executable(${PROJECT_NAME} ${SRCFILES} ${EXTRA_SOURCES} "include/refract.h" )
 
 # Include paths (target-scoped). Mark third-party as SYSTEM to reduce warnings.
 target_include_directories(${PROJECT_NAME}
@@ -76,7 +76,7 @@ else()
   message(STATUS "No HW2LIB_DIR provided, building hw2 from source.")
   # Build our own hw2 library from the HW2FILES and link it
   # We're readding the files we removed from above.
-  add_library(hw2 STATIC ${HW2FILES})
+  add_library(hw2 STATIC ${HW2FILES} "include/refract.h" )
 
   # Inherit include paths for third-party headers
   target_include_directories(hw2
@@ -107,3 +107,17 @@ else()
   endif()
 endif()
 
+# Find OpenMP
+find_package(OpenMP REQUIRED)
+
+if(OpenMP_CXX_FOUND)
+
+    target_link_libraries(${PROJECT_NAME} PUBLIC OpenMP::OpenMP_CXX)
+    if(TARGET hw2)
+        target_link_libraries(hw2 PUBLIC OpenMP::OpenMP_CXX)
+    endif()
+    
+    message(STATUS "OpenMP enabled for ${PROJECT_NAME} and hw2 library.")
+else()
+    message(WARNING "OpenMP not found. The app will run sequentially.")
+endif()

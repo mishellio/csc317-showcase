@@ -33,6 +33,7 @@ inline bool read_json(
 #include "Plane.h"
 #include "Triangle.h"
 #include "TriangleSoup.h"
+#include "Ellipsoid.h"
 #include "Light.h"
 #include "PointLight.h"
 #include "DirectionalLight.h"
@@ -93,6 +94,8 @@ inline bool read_json(
       material->kd = parse_Vector3d(jmat["kd"]);
       material->ks = parse_Vector3d(jmat["ks"]);
       material->km = parse_Vector3d(jmat["km"]);
+      material->kt = parse_Vector3d(jmat["kt"]);
+      material->ior = jmat["ior"].get<double>();
       material->phong_exponent = jmat["phong_exponent"];
       materials[name] = material;
     }
@@ -117,6 +120,9 @@ inline bool read_json(
         std::shared_ptr<PointLight> light(new PointLight());
         light->p = parse_Vector3d(jlight["position"]);
         light->I = parse_Vector3d(jlight["color"]);
+        light->height = jlight["height"].get<double>();
+        light->width = jlight["width"].get<double>();
+        light->sample_points = light->sample();
         lights.push_back(light);
       }
     }
@@ -150,7 +156,15 @@ inline bool read_json(
           parse_Vector3d(jobj["corners"][1]),
           parse_Vector3d(jobj["corners"][2]));
         objects.push_back(tri);
-      }else if(jobj["type"] == "soup")
+      }else if (jobj["type"] == "ellipsoid")
+      {
+          std::shared_ptr<Ellipsoid> ellipsoid(new Ellipsoid());
+          ellipsoid->center = parse_Vector3d(jobj["center"]);
+          ellipsoid->radius_x = jobj["radius_x"].get<double>();
+          ellipsoid->radius_y = jobj["radius_y"].get<double>();
+          ellipsoid->radius_z = jobj["radius_z"].get<double>();
+          objects.push_back(ellipsoid);
+      }else if (jobj["type"] == "soup")
       {
         std::vector<std::vector<double> > V;
         std::vector<std::vector<double> > F;
