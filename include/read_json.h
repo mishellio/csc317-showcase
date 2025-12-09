@@ -94,6 +94,8 @@ inline bool read_json(
       material->kd = parse_Vector3d(jmat["kd"]);
       material->ks = parse_Vector3d(jmat["ks"]);
       material->km = parse_Vector3d(jmat["km"]);
+      material->kt = parse_Vector3d(jmat["kt"]);
+      material->ior = jmat["ior"].get<double>();
       material->phong_exponent = jmat["phong_exponent"];
       materials[name] = material;
     }

@@ -55,18 +55,6 @@ Eigen::Vector3d blinn_phong_shading(
 					visible_samples++;
 						//continue;
 				}
-
-
-
-				//Ray v = { p, -ray.direction.normalized() };
-				//Ray l = { p, shadow_ray_samples.direction.normalized() };
-				//Ray h = { p, (l.direction + v.direction).normalized() };
-
-				//Eigen::Vector3d light_colour = light->I;
-
-				//L_sample += light_colour.cwiseProduct(object->material->ks) * pow(std::max(0., n.dot(h.direction)), object->material->phong_exponent);
-				//L_sample += light_colour.cwiseProduct(object->material->kd) * std::max(0., n.dot(l.direction));
-
 			}
 			double visibility = (double)visible_samples / (double)points.rows();
 
