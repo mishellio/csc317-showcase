@@ -14,6 +14,7 @@ void PointLight::direction(
 
 Eigen::MatrixXd PointLight::sample() const
 {
+  //referenced from http://raytracerchallenge.com/bonus/area-light.html
     int steps = 8;
     int num_samples = steps * steps;
 

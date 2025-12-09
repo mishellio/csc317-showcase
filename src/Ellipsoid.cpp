@@ -7,8 +7,6 @@ bool Ellipsoid::intersect(
 	// Replace with your code here:
 	Eigen::Vector3d scale = { radius_x, radius_y, radius_z };
 	Ray transform = ray;
-	//transform.origin = { transform.origin.x() / radius_x, transform.origin.y() / radius_y, transform.origin.z() / radius_z };
-	//transform.direction = { transform.direction.x() / radius_x, transform.direction.y() / radius_y, transform.direction.z() / radius_z };
 	transform.direction = transform.direction.cwiseQuotient(scale);
 	double radius = 1;
 

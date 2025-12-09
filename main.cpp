@@ -37,7 +37,7 @@ int main(int argc, char * argv[])
       std::uniform_real_distribution<double> distrib(0.0, 1.0);
   // For each pixel (i,j)
     #pragma omp for
-      for (int i = 0; i < height; ++i)
+      for (int i = 0; i < height; ++i) // use similar technique as soft shadow
       {
           for (int j = 0; j < width; ++j)
           {
@@ -51,7 +51,6 @@ int main(int argc, char * argv[])
               for (int y = 0; y < steps; y++) {
                   for (int x = 0; x < steps; x++) {
                       Eigen::Vector3d rgb_temp(0, 0, 0);
-                      // Offset based on grid position + small random jitter
                       double offset_x = (x + distrib(gen)) * interval;
                       double offset_y = (y + distrib(gen)) * interval;
 
